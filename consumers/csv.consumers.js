@@ -7,7 +7,7 @@ const consume = async () => {
   await consumer.subscribe({ topic: "csv-record", fromBeginning: true });
   await consumer.run({
     eachMessage: ({ message }) => {
-      console.log(JSON.parse(message.value));
+      // console.log(JSON.parse(message.value));
       const { fname, lname, email, phone, company } = JSON.parse(message.value);
       knex("employees")
         .insert({
@@ -17,8 +17,8 @@ const consume = async () => {
           phone: phone,
           company: company,
         })
-        .then((insertedId) => {
-          console.log("Record Inserted: " + insertedId);
+        .then((record) => {
+          console.log("Record Inserted: " + JSON.stringify(record));
         });
     },
   });
